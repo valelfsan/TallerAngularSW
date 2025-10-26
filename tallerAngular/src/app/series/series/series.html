@@ -1,0 +1,57 @@
+<div class="container my-4">
+  <div class="row g-4">
+    <!-- Columna izquierda: tabla -->
+    <div class="col-12 col-lg-7">
+      <h1 class="h3 mb-3">TV Series</h1>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th><th>Name</th><th>Channel</th><th>Seasons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of series" [class.table-active]="selectedSerie?.id === s.id">
+            <td>{{ s.id }}</td>
+
+            <td>
+              <a href=""
+                 (click)="$event.preventDefault(); selectSerie(s)"
+                 class="link-like"
+                 title="Ver detalles de {{ s.name }}">
+                 {{ s.name }}
+              </a>
+            </td>
+
+            <td>{{ s.channel }}</td>
+            <td>{{ s.seasons }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" class="fw-bold">
+              Seasons average: {{ averageSeasons | number:'1.0-0' }}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- Columna derecha -->
+    <div class="col-12 col-lg-5">
+      <div *ngIf="selectedSerie as sel; else hint" class="card shadow-sm">
+        <img [src]="sel.poster" [alt]="sel.name" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title mb-2">{{ sel.name }}</h5>
+          <p class="card-text">{{ sel.description }}</p>
+          <a [href]="sel.webpage" target="_blank" rel="noopener noreferrer">
+            {{ sel.webpage }}
+          </a>
+        </div>
+      </div>
+      <ng-template #hint>
+        <div class="text-muted">Selecciona una serie para ver el detalle.</div>
+      </ng-template>
+    </div>
+  </div>
+</div>
